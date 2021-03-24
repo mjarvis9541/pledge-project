@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Make a Pledge | User Pledges
+{% endblock title %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #efebe9;
+    }
+</style>
+
+<p class="mt-3"><a href="{% url 'pledges:pledge_list' %}">Return to All Pledges</a></p>
+
+<h1>{{ pledge_user.username|title }}'s Pledges</h1>
+
+<p>View a histroy of all pledges made by {{ pledge_user.username|title }} below.</p>
+
+<!-- Veg Out Pledges -->
+{% if veg_out_list %}
+<!-- <h2 class="mb-3">Veg Out Pledges</h2> -->
+
+{% for pledge in veg_out_list %}
+<div class="card mb-3">
+    <!-- Card title -->
+    <h5 class="card-header" style="display: flex; justify-content: space-between;">
+        <strong>Veg Out Pledge</strong>
+        <span>{{ pledge.pledge_start }} to {{ pledge.pledge_end }}</span>
+    </h5>
+
+    <div class="card-body">
+        <!-- Main card content -->
+        <p>At the moment, I munch on <strong>{{ pledge.current_meals }}</strong> meaty meals each week.</p>
+
+        <p>For the next 2 months, I pledge to go veg for <strong>{{ pledge.get_veggie_meals_display }}</strong> extra
+            meals each week.</p>
+
+        {% if pledge.comments %}
+        <p>"{{ pledge.comments }}" - {{ pledge_user|title }}</p>
+        {% endif %}
+
+        <!-- Saving cards -->
+        <div class="row mt-4">
+            <div class="col-md-4 text-center mb-1">
+                <div style="background: #1de9b6; color: #fff;" class="card">
+                    <div class="card-body">
+                        <strong>Co2 Savings<br>
+                            <span style="font-size: 1.5rem;">{{ pledge.co2_savings }} kg</span>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-1">
+                <div style="background: #00b0ff; color: #fff;" class="card">
+                    <div class="card-body">
+                        <strong>Water Savings<br>
+                            <span style="font-size: 1.5rem;">{{ pledge.water_savings }} kg</span>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-1">
+                <div style="background: #8d6e63; color: #fff;" class="card">
+                    <div class="card-body">
+                        <strong>Waste Savings<br>
+                            <span style="font-size: 1.5rem;">{{ pledge.waste_savings }} kg</span>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+<!-- Clean Bill Pledges -->
+{% if clean_bill_list %}
+<!-- <h2 class="mb-3">Clean Bill Pledges</h2> -->
+
+{% for pledge in clean_bill_list %}
+<div class="card mb-3">
+    <!-- Card title -->
+    <h5 class="card-header" style="display: flex; justify-content: space-between;">
+        <strong>Clean Bill Pledge</strong>
+        <span>{{ pledge.pledge_start }} to {{ pledge.pledge_end }}</span>
+    </h5>
+
+    <div class="card-body">
+        <!-- Main card content -->
+        <p>Within the next 2 months, I pledge to switch my current energy supplier, which is
+            <strong>{{ pledge.get_energy_supplier_display }}</strong> to a green energy supplier.
+
+        <p><strong>{{ pledge.number_of_people }}</strong>
+            {% if pledge.number_of_people == 1 %}person lives in my home.</p>
+
+        <p>My home is mainly heated by <strong>{{ pledge.get_heating_source_display }}</strong>.</p>
+
+        {% else %}
+        people live in our home. </p>
+
+        <p>Our home is mainly heated by <strong>{{ pledge.get_heating_source_display }}</strong>.</p>
+        {% endif %}
+
+        {% if pledge.comments %}
+        <p>"{{ pledge.comments }}" - {{ pledge_user|title }}</p>
+        {% endif %}
+
+        <!-- Saving cards -->
+        <div class="row mt-4">
+            <div class="col-md-4 text-center mb-1">
+                <div style="background: #1de9b6; color: #fff;" class="card">
+                    <div class="card-body">
+                        <strong>Co2 Savings<br>
+                            <span style="font-size: 1.5rem;">{{ pledge.co2_savings }} kg</span>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-1"></div>
+            <div class="col-md-4 text-center mb-1"></div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+{% endblock content %}
