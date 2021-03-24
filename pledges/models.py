@@ -69,9 +69,9 @@ class VegOut(Pledgeable):
         if self.veggie_meals:
             if self.version == 1.0:
                 result = round(0.0884 * self.veggie_meals * 8.7, 2)
-            else:
-                result = 0
-            return result
+        else:
+            result = 0
+        return result
 
     @property
     def water_savings(self):
